@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Si Hyun Choi | Portfolio</title>
+    <style>
+        /* 1. 컬러 팔레트 & 기본 설정 */
+        :root {
+            --bg-color: #0a192f;
+            --card-bg: #112240;
+            --text-main: #e6f1ff;
+            --text-sub: #8892b0;
+            --accent: #64ffda;
+            --gold: #ffd700;
+            --hover-bg: #233554;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Calibre', 'Inter', 'San Francisco', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { color: var(--text-main); font-weight: 700; }
+        
+        /* 2. 네비게이션 */
+        nav {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 10px 30px -10px rgba(2,12,27,0.7);
+        }
+        .logo { font-size: 1.5rem; color: var(--gold); font-weight: bold; }
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* 3. 히어로 섹션 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 150px 10% 0 15%;
+        }
+        
+        .hero-text { width: 55%; }
+        .hero span { color: var(--gold); font-size: 1.1rem; margin-bottom: 20px; display: block; }
+        .hero h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 10px; color: #ccd6f6; }
+        .hero h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; color: var(--text-sub); }
+        .hero p { max-width: 500px; color: var(--text-sub); margin-bottom: 50px; font-size: 1.1rem; }
+        
+        .btn {
+            padding: 15px 30px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .btn:hover { background: rgba(255, 215, 0, 0.1); }
+
+        /* --- 엔진 애니메이션 스타일 --- */
+        .hero-visual {
+            width: 40%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .engine-svg { width: 100%; height: 100%; max-width: 400px; overflow: visible; }
+        
+        .piston-group { animation: piston-move 2s ease-in-out infinite; }
+        .heat-wave {
+            stroke: var(--gold);
+            stroke-width: 2;
+            fill: none;
+            opacity: 0;
+            animation: heat-rise 3s infinite;
+        }
+        .hw1 { animation-delay: 0s; }
+        .hw2 { animation-delay: 1s; }
+        .hw3 { animation-delay: 2s; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes piston-move {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(60px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes rod-rock {
+            0% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
+            100% { transform: rotate(-15deg); }
+        }
+        @keyframes heat-rise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-50px) scale(1.2); opacity: 0; }
+        }
+
+        /* 4. 섹션 공통 */
+        .section { padding: 100px 15%; }
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 300px;
+            height: 1px;
+            background: #233554;
+            margin-left: 20px;
+        }
+
+        /* 5. 메인 경험 (CAHO - Featured) */
+        .featured-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+        .featured-img {
+            width: 55%;
+            height: 400px;
+            background: #233554;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: 1px solid #233554; /* 테두리 추가 */
+        }
+        /* 이미지 스타일 수정: intro.png 적용을 위해 */
+        .featured-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+            opacity: 0.6;      /* 평소엔 배경과 섞이게 */
+            filter: grayscale(100%) contrast(1.2); /* 흑백 톤으로 통일감 */
+            transition: all 0.3s ease-in-out;
+        }
+        /* 마우스 올렸을 때 이미지 선명하게 */
+        .featured-img:hover img { 
+            opacity: 1; 
+            filter: none; /* 컬러 복원 */
+        }
+
+        .featured-content {
+            width: 50%;
+            text-align: right;
+            margin-left: -50px;
+            z-index: 2;
+        }
+        .featured-label { color: var(--gold); font-size: 0.9rem; margin-bottom: 10px; }
+        .featured-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+            margin-bottom: 20px;
+        }
+        .tech-list span { margin-left: 20px; font-size: 0.85rem; color: var(--text-sub); }
+
+        /* 6. 서브 경험 (3 Cards Grid) */
+        .sub-experience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .exp-card {
+            background: var(--card-bg);
+            padding: 30px 25px;
+            border-radius: 5px;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 300px;
+        }
+        .exp-card:hover {
+            top: -10px;
+            box-shadow: 0 20px 30px -15px rgba(2,12,27,0.7);
+        }
+        .exp-card:hover h3 { color: var(--gold); }
+        .folder-icon { width: 40px; height: 40px; margin-bottom: 20px; color: var(--gold); }
+        
+        .exp-header { margin-bottom: 15px; }
+        .exp-header h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .exp-header p { font-size: 0.9rem; color: var(--text-sub); }
+        .exp-tech { font-size: 0.8rem; color: #8892b0; margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+        /* 7. 모달 (팝업 상세) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.7); 
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 50px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 1px solid var(--hover-bg);
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px; right: 30px;
+            font-size: 2rem;
+            color: var(--text-sub);
+            cursor: pointer;
+        }
+        .close-btn:hover { color: var(--gold); }
+        .modal-body h3 { color: var(--gold); margin-bottom: 10px; }
+        .modal-body ul { margin-left: 20px; margin-top: 20px; color: var(--text-sub); }
+        .modal-body li { margin-bottom: 10px; }
+
+        /* 반응형 */
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; padding-top: 120px; text-align: left; }
+            .hero-text { width: 100%; margin-bottom: 50px; }
+            .hero-visual { width: 100%; height: 300px; }
+            
+            .sub-experience-grid { grid-template-columns: 1fr; }
+            .featured-wrapper { flex-direction: column; }
+            .featured-img, .featured-content { width: 100%; margin-left: 0; text-align: left; }
+            .featured-content { margin-top: 30px; }
+            .section { padding: 100px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">SC.</div>
+        <div class="nav-links">
+            <a href="#experience">Experience</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <span>Hi, my name is</span>
+            <h1>Si Hyun Choi.</h1>
+            <h2>I build things for the physical world.</h2>
+            <p>Mechanical Engineering student at Virginia Tech. <br>Specialized in Thermal Dynamics, Automotive Systems, and Prototyping.</p>
+            <button class="btn" onclick="location.href='#experience'">Check out my work</button>
+        </div>
+
+        <div class="hero-visual">
+            <svg class="engine-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="metal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#112240;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#233554;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#112240;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path class="heat-wave hw1" d="M100 80 Q 120 60, 100 40 T 100 0" />
+                <path class="heat-wave hw2" d="M150 80 Q 170 60, 150 40 T 150 0" />
+                <path class="heat-wave hw3" d="M200 80 Q 220 60, 200 40 T 200 0" />
+                <rect x="75" y="100" width="150" height="200" rx="10" stroke="#8892b0" stroke-width="3" fill="none" />
+                <g transform="translate(150, 150)">
+                    <g class="rod-wrapper" style="animation: rod-rock 2s ease-in-out infinite; transform-origin: 0 100px;">
+                         <rect x="-10" y="50" width="20" height="120" fill="#8892b0" rx="5" />
+                         <circle cx="0" cy="55" r="8" fill="#0a192f"/>
+                         <circle cx="0" cy="160" r="15" fill="#8892b0"/>
+                    </g>
+                    <g style="animation: piston-move 2s ease-in-out infinite;">
+                        <rect x="-65" y="-50" width="130" height="100" rx="5" fill="var(--card-bg)" stroke="#64ffda" stroke-width="2"/>
+                        <line x1="-65" y1="-30" x2="65" y2="-30" stroke="#64ffda" stroke-width="1"/>
+                        <line x1="-65" y1="-10" x2="65" y2="-10" stroke="#64ffda" stroke-width="1"/>
+                    </g>
+                    <g style="transform: translateY(160px);">
+                        <circle cx="0" cy="0" r="40" stroke="var(--gold)" stroke-width="3" fill="none" stroke-dasharray="10, 5" style="animation: spin 2s linear infinite; transform-origin: 0 0;"/>
+                        <circle cx="0" cy="0" r="5" fill="var(--gold)"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <h2 class="section-title">Where I've Worked</h2>
+
+        <div class="featured-wrapper">
+            <div class="featured-img">
+                <img src="intro.png" alt="CAHO Korea Project Intro">
+            </div>
+            <div class="featured-content">
+                <p class="featured-label">Featured Internship</p>
+                <h3 style="font-size: 1.8rem; margin-bottom: 20px;">CAHO Korea</h3>
+                <div class="featured-card">
+                    <p style="font-size: 0.95rem; color: #a8b2d1;">
+                        군용 트럭(K700) 라디에이터를 동(Copper)에서 알루미늄으로 재설계하여 
+                        경량화 및 냉각 효율을 최적화했습니다. 
+                        1D 시뮬레이션부터 시제품 제작, 기밀 테스트(1.96 Bar)까지 전체 프로세스를 주도했습니다.
+                    </p>
+                </div>
+                <div class="tech-list" style="margin-top: 20px;">
+                    <span>Siemens NX</span>
+                    <span>Thermal Analysis</span>
+                    <span>Prototyping</span>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 30px; font-size: 1.5rem; color: var(--text-main);">Other Professional Experience</h3>
+        <div class="sub-experience-grid">
+            
+            <div class="exp-card" onclick="openModal('modal1')">
+                <div>
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div class="exp-header">
+                        <h3>Automotive Electronics Intern</h3>
+                        <p>Future Automotive Intelligent Electronics Core Tech Center<br><small>Jun 2024 - Jul 2024</small></p>
+                    </div>
+                    <p style="color: var(--text-sub); font-size: 0.9rem;">
+                        EV 구동계(모터, 인버터) 및 전장부품의 신뢰성/내구성 평가 수행.
+                    </p>
+                </div>
+                <div class="exp-tech">
+                    <span>NVH Testing</span>
+                    <span>Dynamometer</span>
+                    <span>ABB Robot</span>
+                </div>
+            </div>
+
+            <div class="exp-card" onclick="openModal('modal2')">
+                <div>
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div class="exp-header">
+                        <h3>R&D Intern</h3>
+                        <p>Modine Onegene Inc.<br><small>May 2023 - Aug 2023</small></p>
+                    </div>
+                    <p style="color: var(--text-sub); font-size: 0.9rem;">
+                        건설 중장비용 열교환기(Radiator, Oil Cooler) 설계 및 제조 공정 관리.
+                    </p>
+                </div>
+                <div class="exp-tech">
+                    <span>Heat Exchanger</span>
+                    <span>Brazing</span>
+                    <span>QA</span>
+                </div>
+            </div>
+
+            <div class="exp-card" onclick="openModal('modal3')">
+                <div>
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div class="exp-header">
+                        <h3>Undergraduate Researcher</h3>
+                        <p>Virginia Tech (Mechanobiology)<br><small>Aug 2025 - Present</small></p>
+                    </div>
+                    <p style="color: var(--text-sub); font-size: 0.9rem;">
+                        나노섬유(Nanofiber) 제작 및 인장 시험을 통한 세포-섬유 상호작용 분석.
+                    </p>
+                </div>
+                <div class="exp-tech">
+                    <span>MATLAB</span>
+                    <span>STEP Tech</span>
+                    <span>Microscopy</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="modal1" class="modal" onclick="if(event.target == this) closeModal('modal1')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            <h2>Automotive Electronics Intern</h2>
+            <p style="color:var(--gold); margin-bottom: 20px;">Future Automotive Intelligent Electronics Core Tech Center</p>
+            <div class="modal-body">
+                <p>전기차(EV) 핵심 부품의 성능과 내구성을 검증하는 연구소에서의 인턴 경험입니다.</p>
+                <ul>
+                    <li>반무향실(Semi-anechoic chamber)에서 전장부품 BSR(Buzz, Squeak, Rattle) 소음 진동 평가 수행.</li>
+                    <li>모터 다이나모미터를 활용하여 EV 모터, 인버터, 배터리 시스템의 성능 및 내구 시험 진행.</li>
+                    <li>파워 시트 및 모터 쿨러 등 주요 부품의 성능 최적화 데이터 분석.</li>
+                    <li>ABB 로봇을 프로그래밍하여 시트 조절 자동화 테스트 시스템 구축 지원.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal" onclick="if(event.target == this) closeModal('modal2')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+            <h2>R&D Intern (Heat Exchanger)</h2>
+            <p style="color:var(--gold); margin-bottom: 20px;">Modine Onegene Inc.</p>
+            <div class="modal-body">
+                <p>글로벌 열관리 솔루션 기업 Modine의 합작사에서 중장비 열교환기 설계 및 생산에 참여했습니다.</p>
+                <ul>
+                    <li>건설 중장비 및 농기계용 라디에이터, 오일 쿨러, 연료 쿨러 설계 보조.</li>
+                    <li>브레이징(Brazing) 용접 공정 조건(온도, 시간) 관리 및 불량률 감소 활동.</li>
+                    <li>냉각 모듈 조립 라인에서 완제품 품질 검사 및 공정 효율화 아이디어 제안.</li>
+                    <li>설계 도면(2D/3D) 검토 및 양산 이관 업무 지원.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal" onclick="if(event.target == this) closeModal('modal3')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+            <h2>Undergraduate Researcher</h2>
+            <p style="color:var(--gold); margin-bottom: 20px;">Virginia Tech | Mechanobiology Lab</p>
+            <div class="modal-body">
+                <p>기계공학적 원리를 생물학에 적용하는 메카노바이올로지 연구 활동입니다.</p>
+                <ul>
+                    <li>STEP(Spinneret based Tunable Engineered Parameters) 기술을 활용한 폴리머 나노섬유 제작.</li>
+                    <li>나노섬유의 기계적 물성 파악을 위한 미세 인장 시험(Tensile Testing) 수행 및 데이터 분석.</li>
+                    <li>Video Microscopy와 MATLAB을 활용하여 세포가 섬유 네트워크 위에서 이동하는 상호작용 추적 및 분석.</li>
+                    <li>매주 실험 결과 보고서 작성 및 랩 미팅 발표.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+    </script>
+</body>
+</html>
