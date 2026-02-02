@@ -218,6 +218,41 @@
         .project-img-box img { width: 100%; height: auto; border-radius: 4px; display: block; }
         .img-caption { font-size: 0.85rem; color: #718096; margin-top: 10px; font-weight: 600; }
 
+        /* === [추가됨] 3단 그리드 및 출처 링크 스타일 === */
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        /* 모바일에서는 1열로 변경 */
+        @media (max-width: 768px) {
+            .three-col-grid { grid-template-columns: 1fr; }
+        }
+
+        .source-link-container {
+            text-align: right; /* 오른쪽 정렬 */
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #718096;
+        }
+        .source-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            border-bottom: 1px dotted var(--border-color);
+        }
+        .source-link-btn:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+        /* ========================================= */
+
         /* Footer 스타일 추가 */
         footer {
             text-align: center;
@@ -503,27 +538,44 @@
             <span class="close-btn" onclick="closeModal('modal_caho')">&times;</span>
             <h2>CAHO Korea Internship</h2>
             <p style="color:var(--gold); margin-bottom: 20px;">Military Vehicle Radiator Redesign Project</p>
+            
             <div class="modal-body">
+                
                 <h3>1. Project Overview</h3>
                 <p class="lang-en">Redesigned the aging copper radiators of K700 military trucks into modern aluminum brazing types to maximize weight reduction and cooling efficiency.</p>
                 <p class="lang-ko">K700 군용 트럭의 노후화된 동(Copper) 라디에이터를 최신 알루미늄 브레이징 타입으로 재설계하여, 경량화 및 냉각 효율을 극대화한 프로젝트입니다.</p>
                 
-                <h3>2. Design & Modeling (CAD)</h3>
+                <h3>2. Design & Simulation</h3>
                 <div class="project-section">
-                    <p class="lang-en">Reverse-engineered existing copper radiators and optimized tank and core geometry for aluminum properties. Utilized SolidWorks to resolve bracket interference and improve assembly.</p>
-                    <p class="lang-ko">기존 동 라디에이터의 형상을 역설계하고, 알루미늄 소재 특성에 맞춰 탱크와 코어의 형상을 최적화했습니다. SolidWorks를 활용하여 브라켓 간섭을 해결하고 조립성을 개선했습니다.</p>
+                    <p class="lang-en">
+                        Designed optimized geometry using SolidWorks and conducted thermal simulations to compare core depth performance (D55.4 vs D65), selecting the optimal model for heat dissipation.
+                    </p>
+                    <p class="lang-ko">
+                        SolidWorks로 형상을 설계하고, 코어 두께별(D55.4 vs D65) 열해석 시뮬레이션을 수행하여 방열 성능이 가장 우수한 최적 모델을 선정했습니다.
+                    </p>
                     
-                    <div class="project-img-box">
-                        <img src="cad.png" alt="Radiator CAD Design">
-                        <p class="img-caption lang-en">3D Modeling of Aluminum Radiator using SolidWorks</p>
-                        <p class="img-caption lang-ko">SolidWorks를 활용한 알루미늄 라디에이터 3D 모델링 설계 도면</p>
+                    <div class="project-grid">
+                        <div class="project-img-box">
+                            <img src="cad.png" alt="Radiator CAD Design">
+                            <p class="img-caption lang-en">3D Modeling (SolidWorks)</p>
+                            <p class="img-caption lang-ko">알루미늄 라디에이터 3D 모델링</p>
+                        </div>
+                        <div class="project-img-box">
+                            <img src="simu.png" alt="Simulation Result">
+                            <p class="img-caption lang-en">Thermal Simulation (D55.4 vs D65)</p>
+                            <p class="img-caption lang-ko">열해석 시뮬레이션 결과 비교</p>
+                        </div>
                     </div>
                 </div>
                 
-                <h3>3. Performance Verification (Testing)</h3>
+                <h3>3. Performance Verification</h3>
                 <div class="project-section">
-                    <p class="lang-en">Conducted heat exchange performance tests simulating actual operating conditions after prototyping. Visualized fluid temperature distribution using a thermal camera to verify cooling targets.</p>
-                    <p class="lang-ko">시제품 제작 후 실제 작동 환경을 모사한 열교환 성능 실험을 수행했습니다. 열화상 카메라를 통해 유체의 온도 분포를 시각화하고, 방열 성능이 목표치에 도달함을 검증했습니다.</p>
+                    <p class="lang-en">
+                        Built a customized test rig to simulate operating conditions. Used thermal imaging to visualize heat distribution and verify cooling efficiency against targets.
+                    </p>
+                    <p class="lang-ko">
+                        실제 작동 환경을 모사한 테스트 장비를 구축했습니다. 열화상 카메라로 열 분포를 시각화하여 목표 냉각 효율 달성 여부를 검증했습니다.
+                    </p>
                     
                     <div class="project-grid">
                         <div class="project-img-box">
@@ -538,16 +590,39 @@
                         </div>
                     </div>
                 </div>
+
+                <h3>4. Reliability Testing</h3>
+                <div class="project-section">
+                    <p class="lang-en">
+                        Conducted rigorous reliability testing including leak tests (1.96 Bar) and vibration tests to ensure structural integrity under harsh military environments.
+                    </p>
+                    <p class="lang-ko">
+                        가혹한 군 작전 환경을 견딜 수 있도록 1.96 Bar 수압 기밀 테스트(Leak Test)와 진동 내구 테스트(Vibration Test)를 수행하여 구조적 신뢰성을 확보했습니다.
+                    </p>
+
+                    <div class="project-grid">
+                        <div class="project-img-box">
+                            <img src="leak.png" alt="Leak Test">
+                            <p class="img-caption lang-en">Leakage Test (1.96 Bar)</p>
+                            <p class="img-caption lang-ko">완제품 기밀 테스트</p>
+                        </div>
+                        <div class="project-img-box">
+                            <img src="vib.png" alt="Vibration Test">
+                            <p class="img-caption lang-en">Vibration Durability Test</p>
+                            <p class="img-caption lang-ko">진동 내구 테스트</p>
+                        </div>
+                    </div>
+                </div>
                 
-                <h3>4. Key Achievements</h3>
+                <h3>5. Key Achievements</h3>
                 <ul class="lang-en">
                     <li><strong>Led SolidWorks Design:</strong> Achieved 40% weight reduction and optimized cooling core area.</li>
-                    <li><strong>Experimental Verification:</strong> Proved superior heat dissipation through self-built test sets and thermal analysis.</li>
+                    <li><strong>Simulation-Driven Optimization:</strong> Selected D65 core model through comparative thermal analysis.</li>
                     <li><strong>Reliability Secured:</strong> Passed 1.96 Bar hydraulic leak test and reinforced structure for vibration durability.</li>
                 </ul>
                 <ul class="lang-ko">
                     <li><strong>SolidWorks 설계 주도:</strong> 기존 대비 중량 40% 절감 및 냉각 코어 면적 최적화 설계 완료.</li>
-                    <li><strong>실험적 검증:</strong> 자체 구축한 실험 세트와 열화상 분석을 통해 알루미늄 라디에이터의 우수한 방열 성능 입증.</li>
+                    <li><strong>시뮬레이션 기반 최적화:</strong> 열해석 비교를 통해 방열 성능이 우수한 D65 코어 모델 선정.</li>
                     <li><strong>신뢰성 확보:</strong> 1.96 Bar 수압 기밀 테스트 통과 및 진동 내구성을 고려한 구조 보강.</li>
                 </ul>
             </div>
@@ -574,7 +649,35 @@
                     <li>냉각 모듈 조립 라인에서 완제품 품질 검사 및 공정 효율화 아이디어 제안.</li>
                     <li>설계 도면(2D/3D) 검토 및 양산 이관 업무 지원.</li>
                 </ul>
-            </div>
+
+                <h3>Major Products</h3>
+                
+                <div class="three-col-grid">
+                    <div class="project-img-box">
+                        <img src="morad.png" alt="Modine Radiator">
+                        <p class="img-caption lang-en">Heavy Duty Radiator</p>
+                        <p class="img-caption lang-ko">중장비용 라디에이터</p>
+                    </div>
+                    <div class="project-img-box">
+                        <img src="moco.png" alt="Modine Oil Cooler">
+                        <p class="img-caption lang-en">Oil Cooler & Module</p>
+                        <p class="img-caption lang-ko">오일 쿨러 및 모듈</p>
+                    </div>
+                    <div class="project-img-box">
+                        <img src="moair.png" alt="Modine Charge Air Cooler">
+                        <p class="img-caption lang-en">Charge Air Cooler (CAC)</p>
+                        <p class="img-caption lang-ko">차지 에어 쿨러 (CAC)</p>
+                    </div>
+                </div>
+
+                <div class="source-link-container">
+                    <span class="lang-en">Image Source: </span>
+                    <span class="lang-ko">사진 출처: </span>
+                    <a href="https://moc.onegene.com/en/index" target="_blank" class="source-link-btn">
+                        Modine Onegene Website ↗
+                    </a>
+                </div>
+                </div>
         </div>
     </div>
 
