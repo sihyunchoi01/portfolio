@@ -15,8 +15,8 @@
             --gold: #a67c00; 
             --hover-bg: #f7fafc;
             --border-color: #e2e8f0;
-            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05),0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --heat-hot: #ef4444;
             --heat-cold: #3b82f6;
         }
@@ -126,14 +126,24 @@
         .section-title { font-size: 1.8rem; margin-bottom: 40px; color: var(--text-main); display: flex; align-items: center; }
         .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border-color); margin-left: 20px; }
 
-        /* 4. About Section */
+        /* 4. About Section - Updated to make image large and non-circular */
         #about { padding-top: 40px; }
-        .about-content { display: flex; align-items: center; gap: 50px; }
+        .about-content { display: flex; align-items: flex-start; gap: 50px; } /* Updated: align-items to start for vertical composition */
         .about-img { 
-            width: 200px; height: 200px; border-radius: 50%; overflow: hidden; 
-            border: 4px solid var(--gold); box-shadow: var(--shadow-hover); flex-shrink: 0; 
+            width: 50%; /* Updated: take significant percentage of container */
+            max-width: 450px; /* Updated: limit maximum width */
+            height: auto; /* Updated: remove fixed height restriction */
+            border-radius: 12px; /* Updated: slight round corners, match cards, not circle */
+            overflow: hidden; 
+            border: none;
+            box-shadow: var(--shadow-hover); /* 테두리가 없는 대신 그림자를 더 짙게 설정 */
+            flex-shrink: 0;
         }
-        .about-img img { width: 100%; height: 100%; object-fit: cover; }
+        .about-img img { 
+            width: 100%; 
+            height: auto; /* Updated: allow vertical expansion */
+            object-fit: cover; /* Changed from contain to cover for full box look, assuming reasonable JPG aspect ratio */
+        }
         .about-text { font-size: 1.05rem; color: var(--text-sub); line-height: 1.8; }
 
         /* 5. Education Section */
@@ -155,7 +165,7 @@
         .edu-link { color: var(--text-sub); font-size: 1.2rem; transition: 0.3s; padding: 10px; border-radius: 50%; margin-left: auto; }
         .edu-link:hover { color: var(--gold); background: rgba(166, 124, 0, 0.1); }
 
-        /* 6. Experience & Projects Section */
+        /* 6. Experience Section */
         .experience-list { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
         .timeline-item {
             display: flex; gap: 20px; padding: 25px; border-radius: 12px; border: 1px solid var(--border-color);
@@ -173,7 +183,7 @@
         .arrow-icon { font-size: 1.2rem; color: var(--border-color); transition: 0.3s; }
         .timeline-item:hover .arrow-icon { color: var(--gold); transform: translateX(5px); }
 
-        /* Featured (CAHO / Projects) */
+        /* Featured (CAHO) */
         .featured-wrapper { display: flex; align-items: flex-start; margin-bottom: 50px; gap: 40px; }
         
         .featured-img {
@@ -215,7 +225,7 @@
         .modal-body li { margin-bottom: 10px; }
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
         .project-img-box { background: #f7fafc; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
-        .project-img-box img { width: 100%; height: auto; border-radius: 4px; display: block; object-fit: contain; max-height: 250px; margin: 0 auto; }
+        .project-img-box img { width: 100%; height: auto; border-radius: 4px; display: block; }
         .img-caption { font-size: 0.85rem; color: #718096; margin-top: 10px; font-weight: 600; }
 
         /* === 3단 그리드 및 출처 링크 스타일 === */
@@ -288,7 +298,7 @@
             .hero-visual { width: 100%; height: 300px; }
             .hero-actions { align-items: flex-start; }
             .section { padding: 60px 5%; }
-            .about-content { flex-direction: column; text-align: center; }
+            .about-content { flex-direction: column; text-align: center; align-items: center; } /* Updated for responsive */
             .featured-wrapper { flex-direction: column; }
             .featured-img, .featured-content { width: 100%; margin-left: 0; text-align: left; }
             .featured-content { margin-top: 30px; }
@@ -300,6 +310,8 @@
             .edu-logo { width: 150px; height: 150px; } 
             .edu-courses { padding-left: 0; margin-top: 20px; text-align: center; }
             .edu-link { margin-left: 0; }
+
+            .about-img { width: 100%; max-width: 400px; margin-bottom: 30px; } /* Updated for responsive stacked layout */
         }
     </style>
 </head>
@@ -311,7 +323,6 @@
             <a href="#about">About</a>
             <a href="#education">Education</a>
             <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a> 
             
             <div class="lang-switch" onclick="toggleLanguage()">
                 <span>🌐</span> <span id="lang-text">KR</span>
@@ -415,8 +426,7 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
             <div class="about-img">
-                <img src="me2.JPG" alt="Si Hyun Choi Headshot">
-            </div>
+                <img src="me2.JPG" alt="Si Hyun Choi Headshot"> </div>
             <div class="about-text">
                 <p class="lang-en">
                     Mechanical engineering student with a strong focus on <strong>mechanical design</strong>, <strong>prototyping</strong>, and <strong>engineering-driven problem solving</strong>. Experienced in translating theoretical concepts into <strong>functional, manufacturable solutions</strong> through hands-on projects and industry experience. A <strong>responsible and collaborative team player</strong> with a strong sense of ownership, <strong>ethical integrity</strong>, and commitment to <strong>delivering reliable results</strong>.
@@ -805,8 +815,8 @@
                         </div>
                         <div class="project-img-box">
                             <img src="problemstat.png" alt="Balloon Burst vs Final Landing Distance">
-                            <p class="img-caption lang-en">Previous Launch: Burst vs Landing Distance</p>
-                            <p class="img-caption lang-ko">이전 발사: 풍선 파열 위치 및 최종 착륙 거리 비교</p>
+                            <p class="img-caption lang-en">Previous Launch: Burst vs Landing Distance Analysis</p>
+                            <p class="img-caption lang-ko">이전 발사: 풍선 파열 위치 및 최종 착륙 거리 분석</p>
                         </div>
                     </div>
                 </div>
